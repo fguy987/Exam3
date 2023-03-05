@@ -12,16 +12,24 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
-    
+    public Text BestScoreText;
+
+    private ScoreKeeper scoreKeeper;
     private bool m_Started = false;
     private int m_Points;
     
     private bool m_GameOver = false;
 
-    
+    private void Awake()
+    {
+        scoreKeeper = GameObject.FindGameObjectWithTag("SK").GetComponent<ScoreKeeper>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        
+        //Construct Blocks
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -36,6 +44,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        BestScoreText.text = $"Best Score : {scoreKeeper.PlayerName} : {m_Points}";
     }
 
     private void Update()
