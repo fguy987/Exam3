@@ -9,7 +9,7 @@ using TMPro;
 public class MainMenuHandler : MonoBehaviour
 {
     private ScoreKeeper scoreKeeper;
-    private Button startButton, exitButton;
+    private Button startButton, clearButton, exitButton;
     private TMP_InputField inputField;
 
     private void Awake()
@@ -18,9 +18,11 @@ public class MainMenuHandler : MonoBehaviour
         
         Button[] buttons = GetComponentsInChildren<Button>();
         startButton = buttons[0];
-        exitButton = buttons[1];
+        clearButton = buttons[1];
+        exitButton = buttons[2];
 
         startButton.onClick.AddListener(OpenNamingMenu);
+        clearButton.onClick.AddListener(ClearHighScore);
         exitButton.onClick.AddListener(ExitGame);
 
         inputField = GetComponentInChildren<TMP_InputField>();
@@ -29,10 +31,14 @@ public class MainMenuHandler : MonoBehaviour
 
     }
 
-
     private void OpenNamingMenu()
     {
         inputField.transform.parent.gameObject.SetActive(true);
+    }
+
+    private void ClearHighScore()
+    {
+        scoreKeeper.ClearHighScore();
     }
 
     private void StartGame(string arg0)

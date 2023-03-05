@@ -45,7 +45,8 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        BestScoreText.text = $"Best Score : {scoreKeeper.PlayerName} : {m_Points}";
+        BestScoreText.text = $"Best Score : {scoreKeeper.BestPlayerName} : {scoreKeeper.BestScore}";
+
     }
 
     private void Update()
@@ -65,9 +66,15 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
+            
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadScene(0);
             }
         }
     }
@@ -76,6 +83,12 @@ public class MainManager : MonoBehaviour
     {
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
+        if (m_Points > scoreKeeper.BestScore) 
+        { 
+            scoreKeeper.SetBestPlayerNameAndScore(scoreKeeper.PlayerName, m_Points);
+        }
+
+        BestScoreText.text = $"Best Score : {scoreKeeper.BestPlayerName} : {scoreKeeper.BestScore}";
     }
 
     public void GameOver()
